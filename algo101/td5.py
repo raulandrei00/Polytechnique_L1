@@ -43,13 +43,3 @@ class queue :
             self.l.pop()
         self.h = 0
 
-q = queue ()
-for i in range (6):
-    q . push ( i )
-for i in range (5):
-    print ( q . pop () , end = " " )
-print ()
-print ( q .l , q . h )
-l = q . l
-q . compress ()
-print (l , q . h )
