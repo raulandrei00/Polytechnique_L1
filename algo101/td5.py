@@ -43,3 +43,37 @@ class queue :
             self.l.pop()
         self.h = 0
 
+class uf :
+    def __init__ ( self , n ):
+        self . l = list ( range ( n ))
+        self . d = [0] * n
+    
+    def find ( self , a ):
+        # additional optimisation: path compression
+        if self.l[a] != a:
+            self.l[a] = self.find(self.l[a])
+            return self.l[a]
+        else:
+            return a
+    
+    def union ( self , a , b ):
+        a = self.find(a)
+        b = self.find(b)
+        if (self.l[a] <= self.l[b]): a , b = b , a
+
+        self.d[a] += self.d[b]
+        self.l[b] = a
+
+    def toList ( self ):
+        n = len ( self . l )
+        t = []
+        for i in range ( n ):
+            t . append ([])
+        for a in range ( n ):
+            t [ self . find ( a )]. append ( a )
+        r = []
+        for i in range ( n ):
+            if t [ i ] != []:
+                r . append ( t [ i ])
+        return r
+    
