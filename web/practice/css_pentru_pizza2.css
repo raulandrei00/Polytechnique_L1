@@ -1,0 +1,26 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    color: blue
+}
+
+ol {
+    background-color: rgb(15,15,15);
+    color: yellow;
+}
+
+body {
+    background-color: rgb(230,230,255);
+}
+
+p em {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+h2 em {
+    color: grey;
+}

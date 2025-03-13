@@ -1,0 +1,49 @@
+h1 {
+    text-align: center;
+    color: cyan;
+}
+
+h3 {
+    text-align: center;
+    color: rgb(39, 143, 217);
+    font-family: Courier New;
+}
+
+div {
+    padding: 50px;
+    margin: auto;
+    background-color: rgb(0, 135, 238);
+    width: 1500px;
+    height: 500px;
+}
+
+div p {
+    margin: 75px;
+    text-align: center;
+    vertical-align: center;
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+    padding-top: 20px;
+    /* display: none; */
+    color: cyan;
+    /* Set color and border */
+    background-color: cyan;
+    
+    
+}
+
+div p:hover {
+    text-align: center;
+    vertical-align: center;
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+    padding-top: 20px;
+
+    color:blue;
+    
+  
+    /* Set color and border */
+    background-color: white;
+}

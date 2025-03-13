@@ -1,0 +1,53 @@
+
+
+section , footer {
+
+    text-align: center;
+    
+
+}
+
+section p {
+    text-align: center;
+    display: inline-block;
+
+    font-weight: bold;
+  
+    /* set dimension of the box */
+    width: 120px;
+    height: 100px;
+    padding-top: 20px;
+    margin-left: 25px;
+  
+    /* Set color and border */
+    background-color: lightblue;
+    border: 2px solid blue;
+    border-radius: 10px;
+
+}
+
+section p:hover {
+
+    background-color: brown;
+}
+
+footer p {
+
+    text-align: center;
+    display: inline-block;
+
+    font-weight: bold;
+  
+    /* set dimension of the box */
+    width: 250px;
+    height: 20px;
+    padding-top: 1px;
+    margin-left: 15px;
+  
+    /* Set color and border */
+    background-color: rgb(213, 103, 103);
+    /* border: 2px solid blue;*/
+    border-radius: 10px; 
+
+
+}

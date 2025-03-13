@@ -1,0 +1,6 @@
+8 8
+Andi Maxi Kim Alex
+1,1
+1,8
+8,8
+8,1

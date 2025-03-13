@@ -1,0 +1,51 @@
+.parent {
+    background-color: lightgray;
+    height: 350px;
+    padding: 20px;
+}
+
+.container {
+    background-color: lightcyan;
+    width: 500px;
+    height: 300px;
+    padding: 10px;
+    margin: 10px;
+    outline: 2px solid cyan;
+    text-align:center;
+}
+
+.sub-elements-1 {
+    display: block;
+    margin: 0;
+
+    background-color: lightcoral;
+    width: 350px;
+    height: 50px;
+    border: 2px solid darkred;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.sub-elements-2 {
+    display: block;
+    margin: auto;
+
+    background-color: lightgreen;
+    width: 350px;
+    height: 50px;
+    border: 2px solid green;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.sub-elements-3 {
+    display: block;
+    margin-right: auto;
+
+    background-color: lightsalmon;
+    width: 350px;
+    height: 50px;
+    border: 2px solid salmon;
+    padding: 10px;
+    margin-top: 10px;
+}

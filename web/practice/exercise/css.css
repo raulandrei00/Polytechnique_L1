@@ -1,0 +1,54 @@
+.parent {
+    background-color: lightgray;
+    height: 350px;
+    padding: 20px;
+}
+
+.container {
+    width: 50%;
+    height: 125px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid black;
+}
+
+.box {
+    width: 80px;
+    height: 50px;
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px solid black;
+}
+
+.A {
+    margin: auto;
+    background-color: lightcyan;
+}
+
+.B {
+    margin-left: auto;
+    background-color: lightpink;
+}
+
+.A1, .A2 {
+    background-color: cyan;
+}
+
+.A1 {
+    margin: auto
+}
+
+.A2 {
+    margin-left: auto;
+}
+
+.B1 {
+    margin: auto;
+
+}
+
+
+
+.B1, .B2 {
+    background-color: violet;
+}
