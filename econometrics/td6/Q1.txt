@@ -1,0 +1,24 @@
+
+1.    Why a simple OLS regression of child mortality on pollution would lead to a biased estimation?
+
+There exist ommitted variables which affect both mortality and pollution. The error they yield is quite large
+
+2.    A common IV strategy for pollution is to use regulation, why would it lead to a weak first stage?
+
+The problem arises due to the flaws of the regulations imposed
+
+3.    The authors argue that the external validity of the results found in developed countries is low. 
+      Why? Would we over- or under-estimate the real effect if we were to use the coefficients find in developed/less polluted countries?
+
+There are arguments for both the underestimation and overestimation cases. The problem is that the correlation between pollution and mortality will likely not look the same (as a function) in developed countries as opposed to developing countries.
+
+
+4.    Instead of running a simple OLS regression, the authors suggest to add month and month-area fixed effect. 
+      Why does it improve the quality of the estimation?
+
+By adding a monthly area fixed effects to the regression, because of Mexico's high variance in pollution over time, we can observe the effect of pollution on mortality for a wide range of magnitudes (levels of pollution)
+
+
+5.    The authors suggest using thermal inversion as an instrument for air pollution. 
+      Discuss the exogeneity and the relevance conditions of this instrument.
+
