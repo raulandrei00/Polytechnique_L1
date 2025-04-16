@@ -61,7 +61,7 @@ graph_data = merge (graph_data , avg_death_guadaa , by = "month")
 
 graph_data
 
-install.packages("tidyr")
+# install.packages("tidyr")
 library("tidyr")
 
 graph_long <- graph_data %>% select(month , avg_invt , avg_d_m , avg_d_g) %>%
@@ -69,11 +69,46 @@ graph_long <- graph_data %>% select(month , avg_invt , avg_d_m , avg_d_g) %>%
 
 graph_long
 
-graf = ggplot (graph_long , mapping = aes (x = month , y = value , color = variable)) + 
-        geom_line() 
+graf = ggplot (graph_data) + 
+        geom_bar(aes(x= month , y = avg_invt), stat = "identity", fill= "blue", alpha= 4) +
+
+        geom_line(aes(x= month, y= avg_d_m / 10), color= "black") + 
+        
+        geom_line(aes(x= month, y= avg_d_g / 10), color= "red") + 
+
+        scale_y_continuous(name= "invterm scale" , sec.axis = sec_axis(~ . * 10, name = "deaths axis")) +
+
+        # scale_y_continuous(name= "deaths axis" , sec.axis = sec_axis(~ ., name = "deaths axis"))
+
+        theme_minimal() + 
+
+        theme(axis.title.y.left = element_text(color = "blue") , 
+                axis.title.y.right = element_text(color= "red") , 
+                plot.background = element_rect(fill = "white"), 
+                panel.background = element_rect(fill = "white", colour="blue"))
 
 graf
 
+ggsave(
+  "graph_replica.jpg",
+  plot = last_plot(),
+  device = NULL,
+  path = "/users/eleves-a/2024/raul-andrei.pop/Desktop/econometrics/td6",
+  scale = 1,
+  width = NA,
+  height = NA,
+  units = c("in", "cm", "mm", "px"),
+  dpi = 300,
+  limitsize = TRUE,
+  bg = NULL,
+  create.dir = FALSE,
+  
+)
+
+
+
+
+# thx https://stackoverflow.com/questions/3099219/ggplot-with-2-y-axes-on-each-side-and-different-scales
 
 # fixed effect = 1) individual fixed effect -> control for charact that do not evolve across time
 #                2) time fixed effect -> varies across time

@@ -1,0 +1,25 @@
+.circle {
+    background-color:cyan; 
+    width: 100px; 
+    height: 100px; 
+    position: fixed; 
+    border-radius: 50%;
+}
+
+.box {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+
+#follower {
+
+    position: fixed;         /* Stay relative to viewport */
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+    pointer-events: none;    /* Let clicks go through */
+    transition: transform 0.05s linear; /* Smooth motion */
+}
