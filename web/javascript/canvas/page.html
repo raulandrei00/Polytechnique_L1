@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> My Webpage </title>
+
+    <script src="script_drawing.js" defer></script>
+</head>
+
+<body> 
+    <ul>
+        <li>Background color
+            <input type="color" id="backgroundColorPicker" value="#ffffff">
+        </li>
+        <li>Pen color 
+            <input type="color" id="penColorPicker" value="#ff0000">
+        </li>
+        <li>Pen width
+            <input type="range" id="penWidthSlider" min="1" max="50" value="5">
+        </li>
+        <li>Pen style
+            <select id="penStyleSelect">
+                <option value="solid">Solid</option>
+                <option value="dashed">Dashed</option>
+                <option value="dotted">Dotted</option>
+            </select>
+        </li>
+    </ul>
+
+    <div id="clearCanvasButton">Clear canvas</div>
+
+    <canvas>
+
+    </canvas>
+</body>
+</html>
