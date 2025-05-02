@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notebook</title>
+    <script src="notebook.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #toolbar {
+            margin-bottom: 10px;
+        }
+        #toolbar button, #toolbar input {
+            margin-right: 10px;
+        }
+        canvas {
+            border: 1px solid #000;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+    <div id="toolbar">
+        <label for="color">Color:</label>
+        <input type="color" id="color" value="#000000">
+        <label for="size">Brush Size:</label>
+        <input type="number" id="size" min="1" max="50" value="5">
+        <button id="clear">Clear</button>
+    </div>
+    <canvas id="drawingCanvas" width="800" height="600"></canvas>
+
+    
+</body>
+</html>
