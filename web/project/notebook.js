@@ -16,7 +16,13 @@ colorPicker.addEventListener('input', (e) => brushColor = e.target.value);
 sizeInput.addEventListener('input', (e) => brushSize = e.target.value);
 clearButton.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 
-
+// Save the canvas as an image
+document.getElementById('save').addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = '/users/eleves-a/2024/raul-andrei.pop/Desktop/web/project/canvas-image.png'; // File path for the saved image
+    link.href = canvas.toDataURL(); // Convert canvas to a data URL
+    link.click(); // Trigger the download
+});
 
 function draw(e) {
     if (!drawing) return;
