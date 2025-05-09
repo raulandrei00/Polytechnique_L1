@@ -1,0 +1,38 @@
+- Duration: 45min
+
+- Type: You will have a small webpage to reproduce - in particular you will need to reproduce the behavior of the elements using JavaScript.
+
+- Principle: The link to the test will be available on Moodle. You will need to code 3 files on your computer (html, css, and javascript) and upload them to the test webpage. 
+
+- Program: The program of the test covers all JavaScript up to "Animation loop" included. Canvas is not in the program of the test.
+
+- Modalities: Use of notes, code, internet queries is allowed. 
+All forms of communication and exchange of data are forbidden. You should not communicate together, don't use any chat, don't ask questions to anyone except to your teacher in case of a technical problem (we won't help you to solve the exercise though).
+
+Cheating penalty: If you are caught with any type of communication, code exchange, or ending up with similar codes, your final CSE104 grade will be F in the first session, and your cheating reported to your administration for further processing. Note that the penalty applies in the same way to students who receive but also provide the code.
+
+Hints: 
+
+- The opposite of [element].addEventListener(eventName, functionName), is [element].removeEventListener(eventName, functionName) (removing a listener on an element).
+
+- The opposite of [element].classList.add(className) is [element].classList.remove(className). (remove className to the element).
+
+- The cos/sin function can be called in Javascript using "Math.cos(x)" and "Math.sin(x)".
+
+- Elements in HTML can be rotated using the CSS command: "transform: rotate(Xrad)", where X is the angle in radians.
+
+- Considering an array "let a = [];", you can add an element x with "a.push(x)", and remove an element at index i with "a.splice(i,1)".
+
+- An element in the DOM can be removed in javascript using "[element].remove();"
+
+
+
+Don't forget that you JS code must start with the line "use strict;". Your HTML and CSS code must remain valid and pass the HTML validator without error. Avoid giving a code that crashes: It is better to provide a code that works, than a code that does theoretically more but actually crashes. 
+
+Basic functionality and general behavior provide more points than fine details. Focus on these only if you have done the basic functionality - they are often trickier to implement while providing fewer points.
+
+Each box has the following dimension (width, height)=(40px, 25px) with a margin of 5px.
+
+The colors used on the boxes are "greenyellow", "green", "orange", and "red".
+
+You can create a border around the box using the CSS command "border" (takes additional space) or "outline" (do not change the size of the container).
