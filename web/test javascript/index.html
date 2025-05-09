@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CSC_1S004 - 2025 - Test 2</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+
+    <body>
+        <div id="main">
+            <div class="header">
+                <form>
+                  <input type="button" value="Add" onclick="addShapes();" id="addBt">
+                  <input type="text" name="countField" value="10" id="countTf"
+                         onkeydown="handleKeyEvent(event);">
+                  <select id="shapeType" name="shapeT">
+                    <option value="squares">squares</option>
+                    <option value="circles">circles</option>
+                  </select>
+                  <span style="margin-left:60px"> Color: </span><input type="color" id="selectedColor" value="#8400FF">
+                  <input type="checkbox" name="randomColor" id="randomColor"><label for="randomColor">random</label>
+                  <input style="margin-left:60px" type="button" value="Clear" onclick="clearContainer();" id="clearBt">
+                </form>
+            </div>
+        </div>
+    </body>
+
+</html>
