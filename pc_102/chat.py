@@ -6,6 +6,7 @@ import sys
 class ChatServerState:
     def __init__ (self):
         self.clients = []  # List of connected clients
+        self.client_by_nickname = dict()
 
 # --------------------------------------------------------------------
 class ChatServerClientProtocol(asyncio.Protocol):
@@ -13,12 +14,15 @@ class ChatServerClientProtocol(asyncio.Protocol):
         self.state = state
         self.buffer : bytes = b''
         
+        
 
     def connection_made(self, transport : asyncio.BaseTransport) -> None:
         # register the client in self.state
         
         self.transport = transport
+        self.nickname = None
         self.state.clients.append(transport)  # Add the transport to the global state
+        
         print(f"Client connected: {transport.get_extra_info('peername')}")
         print("HERE " , self.state.clients)
         # note that `transport` can be used as a key in a dictionary
@@ -40,17 +44,34 @@ class ChatServerClientProtocol(asyncio.Protocol):
         self.buffer += data_send
         # print('Send: {!r}'.format(data_send))
 
-
         if message[-1] == '\n':
+            if self.nickname is None:
+                # if the nickname is not set, set it to the first word of the message
+                self.nickname = self.buffer.decode()[:-2]
+                # remove the last two characters (the newline and the space)
+                print(f"Nickname set to: {self.nickname}")
+                self.buffer = f"{self.nickname} has joined the chat\n".encode()
+                self.state.client_by_nickname[self.nickname] = self.transport
+                print(self.state.client_by_nickname)
+
+            if self.buffer.decode().startswith("#"):
+                recipient = self.buffer.decode().split(" ")[0][1:]
+                message = self.buffer.decode().split(" ", 1)[1]
+                print(f"Sending private message to {recipient}: {message}")
+                self.state.client_by_nickname[recipient].write(f"{self.nickname}: {message}".encode())
+            if self.buffer.decode() == "!users\r\n":
+                print(f"Sending users list to {self.nickname}")
+                users = ", ".join(self.state.client_by_nickname.keys())
+                self.transport.write(f"Connected users: {users}\n".encode())
 
             for client in self.state.clients:
                 if client == self.transport:
                     continue
                 print(f"Sending to client: {client.get_extra_info('peername')}")
                 # if client != self.transport:
-                client.write(self.buffer)
+                client.write(f"{self.nickname}: {self.buffer.decode()}".encode())
+                    
                 
-            
             print('Send: {!r}'.format(self.buffer))
             
             self.buffer = b''
