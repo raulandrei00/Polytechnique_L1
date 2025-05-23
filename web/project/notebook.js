@@ -8,7 +8,7 @@ let drawing = false;
 let brushColor = colorPicker.value;
 let brushSize = sizeInput.value;
 
-canvas.addEventListener('mousedown', () => drawing = true);
+// canvas.addEventListener('mousedown', () => drawing = true);
 canvas.addEventListener('mouseup', () => drawing = false);
 canvas.addEventListener('mousemove', draw);
 
@@ -24,6 +24,15 @@ document.getElementById('save').addEventListener('click', () => {
     link.click(); // Trigger the download
 });
 
+let lastX = 0;
+let lastY = 0;
+
+canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+});
+
 function draw(e) {
     if (!drawing) return;
     ctx.lineWidth = brushSize;
@@ -31,7 +40,10 @@ function draw(e) {
     ctx.strokeStyle = brushColor;
 
     ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+    ctx.moveTo(lastX, lastY);
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
+
+    lastX = e.offsetX;
+    lastY = e.offsetY;
 }
