@@ -33,6 +33,7 @@ canvas.addEventListener('mousedown', (e) => {
     lastY = e.offsetY;
 });
 
+
 function draw(e) {
     if (!drawing) return;
     ctx.lineWidth = brushSize;
