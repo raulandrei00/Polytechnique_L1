@@ -4,191 +4,134 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome – Starry Sketch</title>
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --gradient-colors: #2c3e50, #4a6fa5, #f1c40f, #e67e22, #d35400;
-      --btn-start: #f39c12;
-      --btn-end: #d35400;
-      --modal-bg: rgba(0, 0, 0, 0.7);
-      --card-gradient-start: #4a6fa5;
-      --card-gradient-end: #2c3e50;
-      --card-bg: #1f2d45;
-      --input-bg: rgba(255,255,255,0.1);
-      --input-border: rgba(255,255,255,0.3);
-      --input-focus: #f1c40f;
-      --success-color: #28a745;
-      --error-color: #dc3545;
+      --primary: #05386B;
+      --secondary: #5CDB95;
+      --background: #EDF5E1;
+      --card-bg: #FFFFFF;
+      --input-bg: #F0F4EF;
+      --text-dark: #333333;
+      --text-light: #FFFFFF;
+      --btn-radius: 8px;
+      --card-radius: 12px;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      --btn-gradient-start: #5CDB95;
+      --btn-gradient-end: #05386B;
+      --error-color: #E76D6D;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Poppins', sans-serif;
-      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
       margin: 0;
+      min-height: 100vh;
+      position: relative;
       overflow: hidden;
-      background: linear-gradient(45deg, var(--gradient-colors));
-      background-size: 400% 400%;
-      animation: bgAnimate 15s ease infinite;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      color: var(--text-dark);
     }
-    @keyframes bgAnimate { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
-    #bgCanvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
-    header { z-index:1; margin-bottom:40px; }
-    header h1 {
-      font-family:'Quicksand';
-      font-size:4rem;
-      color:#fff;
-      text-shadow:0 2px 8px rgba(0,0,0,0.6);
-      display: inline-block;
-    }
-    /* Per-letter hover effect */
-    header h1 span {
-      display: inline-block;
-      transition: transform 0.3s ease, text-shadow 0.3s ease;
-    }
-    header h1 span:hover,
-    header h1 span.active {
-      transform: scale(1.4);
-      text-shadow: 0 0 8px #f1c40f, 0 0 16px #e67e22;
-    }
-    :root {
-      --gradient-colors: #050a44, #0a21c0, #4a6fa5, #f1c40f, #e67e22, #d35400, #ed7845, #efb11d, #27ae60, #8e44ad;
-    }
-    #startBtn, #loginBtn {
-      font-family: 'Quicksand', sans-serif;
-    }
-    .btn-container { display:flex; flex-direction:column; gap:24px; z-index:1; }
-    .btn { position:relative; padding:18px 40px; font-size:18px; font-weight:600; color:#fff; background:linear-gradient(45deg,var(--btn-start),var(--btn-end)); background-size:200% 200%; border:none; border-radius:50px; cursor:pointer; overflow:hidden; transition:transform .3s ease,box-shadow .3s ease; box-shadow:0 6px 20px rgba(0,0,0,0.3); width:220px; }
-    .btn:hover { background-position:100% 0; transform:translateY(-6px) scale(1.05); box-shadow:0 8px 25px rgba(0,0,0,0.4); }
-    .btn::after { content:''; position:absolute; top:-60%; left:-60%; right:-60%; bottom:-60%; background:rgba(255,255,255,0.1); transform:rotate(45deg) translate(-100%,-100%); transition:transform .8s ease; }
-    .btn:hover::after { transform:rotate(45deg) translate(100%,100%); }
-    .btn .ripple { position:absolute; border-radius:50%; transform:scale(0); background:rgba(255,255,255,0.7); animation:ripple .6s linear; }
-    @keyframes ripple { to{transform:scale(4);opacity:0;} }
-    /* Modal styling matching theme */
-    #loginModal { position:fixed; top:0; left:0; width:100%; height:100%; background:var(--modal-bg); display:none; justify-content:center; align-items:center; z-index:2; }
-    #loginModal.active { display:flex; }
-    .modal-content { background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end)); padding:30px; border-radius:20px; width:320px; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,0.5); position:relative; color:#fff; }
-    .modal-content h3 { margin-bottom:20px; font-family:'Great Vibes',cursive; font-size:2rem; color:#f1c40f; text-shadow:0 2px 8px rgba(0,0,0,0.6); }
-    .login-message { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:16px; font-size:1.1rem; }
-    .login-message.success { color: var(--success-color); }
-    .login-message.error { color: var(--error-color); }
-    .login-message svg { width:24px; height:24px; stroke-width:3; stroke: currentColor; fill: none; }
-    .modal-content input { width:100%; padding:12px 15px; margin:10px 0; border:1px solid var(--input-border); background:var(--input-bg); border-radius:8px; font-size:16px; color:#fff; transition:border .3s ease; }
-    .modal-content input:focus { outline:none; border-color:var(--input-focus); background:rgba(255,255,255,0.15); }
-    .modal-actions { display:flex; justify-content:space-between; margin-top:24px; }
-    .modal-actions .btn { width:48%; }
-    .btn-secondary { background:rgba(255,255,255,0.2); color:#fff; }
-    .btn-secondary:hover { background:rgba(255,255,255,0.3); }
+    #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1; }
+    header { position: absolute; top: 0; left: 0; width: 100%; display: flex; justify-content: flex-end; padding: 16px 32px; z-index: 5; }
+    .top-buttons { display: flex; gap: 12px; }
+    header .btn { padding: 8px 16px; font-size: 0.9rem; }
+    .main-content { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; z-index: 1; }
+    .title { font-family: 'Rubik', sans-serif; font-size: 4rem; color: var(--primary); margin-bottom: 24px; opacity: 0; }
+    .btn-center { position: relative; overflow: hidden; padding: 16px 32px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); background: linear-gradient(45deg, var(--btn-gradient-start), var(--btn-gradient-end)); background-size: 200% 200%; border: none; border-radius: var(--btn-radius); box-shadow: var(--shadow); cursor: pointer; transition: background-position .3s ease, transform .2s ease; font-family: 'Inter', sans-serif; }
+    .btn-center:hover { transform: translateY(-3px); background-position: 100% 0; }
+    .ripple { position: absolute; border-radius: 50%; transform: scale(0); background: rgba(255,255,255,0.7); animation: ripple 0.6s linear; pointer-events: none; }
+    @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+    /* Modal styling */
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; background: rgba(5,56,107,0.4); backdrop-filter: blur(6px); padding: 16px; z-index: 10; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--card-bg); padding: 24px 32px; border-radius: var(--card-radius); box-shadow: var(--shadow); width: 100%; max-width: 360px; position: relative; font-family: 'Inter', sans-serif; }
+    .modal-content h3 { font-family: 'Rubik', sans-serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 16px; }
+    .form-group { margin-bottom: 16px; display: flex; flex-direction: column; }
+    .form-group label { font-size: 0.9rem; margin-bottom: 6px; color: var(--text-dark); }
+    .form-group input { padding: 12px; border: 1px solid var(--secondary); border-radius: var(--btn-radius); font-size: 1rem; background: var(--input-bg); color: var(--text-dark); outline: none; transition: border-color .3s ease, box-shadow .3s ease; }
+    .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(5,56,107,0.2); }
+    .message { font-size: 0.9rem; height: 1.2em; margin-bottom: 12px; color: var(--error-color); }
+    .message.success { color: var(--secondary); }
+    .modal-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 24px; }
+    .modal-actions .btn { flex: 1; padding: 12px; font-size: 1rem; }
+    .modal-actions .btn:hover { transform: translateY(-2px); }
   </style>
 </head>
 <body>
   <canvas id="bgCanvas"></canvas>
   <header>
-    <h1 id="title"></h1>
+    <div class="top-buttons">
+      <button id="loginBtn" class="btn">Login</button>
+      <button id="signUpBtn" class="btn">Sign Up</button>
+    </div>
   </header>
-  <div class="btn-container">
-    <button id="startBtn" class="btn">Start Drawing</button>
-    <button id="loginBtn" class="btn">Login</button>
+  <div class="main-content">
+    <h1 class="title" id="title"></h1>
+    <button id="startBtn" class="btn-center">Start Drawing</button>
   </div>
-  <div id="loginModal">
+
+  <!-- Sign Up Modal -->
+  <div id="signUpModal" class="modal">
     <div class="modal-content">
-      <div id="loginMessage" class="login-message"></div>
-      <h3>Member Login</h3>
-      <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <div class="modal-actions">
-          <button type="submit" class="btn">Submit</button>
-          <button type="button" id="closeModal" class="btn btn-secondary">Cancel</button>
-        </div>
+      <h3>Create Account</h3>
+      <div id="signUpMessage" class="message"></div>
+      <form id="signUpForm">
+        <div class="form-group"><label for="signUpUsername">Username</label><input id="signUpUsername" name="username" required /></div>
+        <div class="form-group"><label for="signUpPassword">Password</label><input type="password" id="signUpPassword" name="password" required /></div>
+        <div class="form-group"><label for="confirmPassword">Confirm Password</label><input type="password" id="confirmPassword" name="confirmPassword" required /></div>
+        <div class="modal-actions"><button type="submit" class="btn">Submit</button><button type="button" id="closeSignUpModal" class="btn">Cancel</button></div>
       </form>
     </div>
   </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h3>Member Login</h3>
+      <div id="loginMessage" class="message"></div>
+      <form id="loginForm">
+        <div class="form-group"><label for="loginUsername">Username</label><input id="loginUsername" name="username" required /></div>
+        <div class="form-group"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required /></div>
+        <div class="modal-actions"><button type="submit" class="btn">Submit</button><button type="button" id="closeLoginModal" class="btn">Cancel</button></div>
+      </form>
+    </div>
+  </div>
+
   <script>
-    // Wrap title text into spans for per-letter effects
-    const titleText = 'Starry Sketch';
-    const titleEl = document.getElementById('title');
-    titleText.split('').forEach(char => {
-      const span = document.createElement('span');
-      span.textContent = char;
-      titleEl.appendChild(span);
-    });
+    // Persistent user storage
+    const initialUsers = [{username:'Cezara',password:'cezara123'},{username:'Raul',password:'raul123'}];
+    let signUpUsers = JSON.parse(localStorage.getItem('signUpUsers') || '[]');
+    const allUsers = () => initialUsers.concat(signUpUsers);
 
-    // Add hover and touch events
-    document.querySelectorAll('header h1 span').forEach(span => {
-      span.addEventListener('mouseenter', () => span.classList.add('active'));
-      span.addEventListener('mouseleave', () => span.classList.remove('active'));
-      span.addEventListener('touchstart', () => span.classList.add('active'));
-      span.addEventListener('touchend', () => span.classList.remove('active'));
-    });
+    // Title hover animation
+    const titleText = 'Starry Sketch', titleEl = document.getElementById('title');
+    titleText.split('').forEach(c => { const s = document.createElement('span'); s.textContent = c; titleEl.appendChild(s); });
+    document.querySelectorAll('.title span').forEach(s => { s.addEventListener('mouseenter', () => s.classList.add('active')); s.addEventListener('mouseleave', () => s.classList.remove('active')); });
+    setTimeout(() => document.querySelector('.title').style.opacity = 1, 300);
 
-    // Starfield setup
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h;
-    function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resize);
-    resize();
-    const stars = Array.from({ length: 150 }, () => ({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5+0.5, d: Math.random()*150 }));
-    let angle = 0;
-    function draw(){
-      ctx.clearRect(0,0,w,h);
-      angle += 0.005;
-      stars.forEach(s => {
-        const cx = w/2, cy = h/2;
-        const radius = Math.hypot(s.x-cx, s.y-cy);
-        const theta = Math.atan2(s.y-cy, s.x-cx) + angle;
-        const x = cx + Math.cos(theta)*radius;
-        const y = cy + Math.sin(theta)*radius;
-        ctx.beginPath();
-        ctx.arc(x,y,s.r,0,2*Math.PI);
-        ctx.fillStyle = `rgba(255,255,230,${0.5+0.5*Math.sin(angle+s.d)})`;
-        ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
+    // Modal controls
+    const signUpBtn = document.getElementById('signUpBtn'), loginBtn = document.getElementById('loginBtn');
+    const signUpModal = document.getElementById('signUpModal'), loginModal = document.getElementById('loginModal');
+    const closeSignUp = document.getElementById('closeSignUpModal'), closeLogin = document.getElementById('closeLoginModal');
+    const signUpForm = document.getElementById('signUpForm'), loginForm = document.getElementById('loginForm');
+    const signUpMsg = document.getElementById('signUpMessage'), loginMsg = document.getElementById('loginMessage');
+    signUpBtn.onclick = () => { signUpMsg.textContent = ''; signUpForm.reset(); signUpModal.classList.add('active'); };
+    closeSignUp.onclick = () => signUpModal.classList.remove('active');
+    loginBtn.onclick = () => { loginMsg.textContent = ''; loginForm.reset(); loginModal.classList.add('active'); };
+    closeLogin.onclick = () => loginModal.classList.remove('active');
 
-    // Ripple effect
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        const r = document.createElement('span'); r.className = 'ripple'; this.appendChild(r);
-        const d = Math.max(this.clientWidth,this.clientHeight);
-        r.style.width = r.style.height = d + 'px';
-        r.style.left = e.clientX - this.getBoundingClientRect().left - d/2 + 'px';
-        r.style.top = e.clientY - this.getBoundingClientRect().top - d/2 + 'px';
-        r.addEventListener('animationend', () => r.remove());
-      });
-    });
+    // Sign Up logic with persistence
+    signUpForm.onsubmit = e => { e.preventDefault(); const u = signUpForm.username.value.trim(), p = signUpForm.password.value, c = signUpForm.confirmPassword.value; if(p !== c) { signUpMsg.textContent = 'Passwords do not match.'; } else { signUpUsers.push({username: u, password: p}); localStorage.setItem('signUpUsers', JSON.stringify(signUpUsers)); signUpMsg.textContent = 'Account created!'; signUpMsg.classList.add('success'); setTimeout(() => signUpModal.classList.remove('active'), 800); } };
 
-    // Navigation and login logic
-    document.getElementById('startBtn').addEventListener('click', e => { e.preventDefault(); window.location.href = 'notebook.html'; });
-    const loginBtn = document.getElementById('loginBtn'), loginModal = document.getElementById('loginModal'), closeModal = document.getElementById('closeModal'), loginForm = document.getElementById('loginForm'), loginMessage = document.getElementById('loginMessage');
-    const users = [{username:'Cezara',password:'cezara123'},{username:'Raul',password:'raul123'},{username:'Mama',password:'mama123'},{username:'Tata',password:'tata123'},{username:'Purcel',password:'purcel123'}];
-    loginBtn.addEventListener('click', () => { loginMessage.textContent=''; loginMessage.className='login-message'; loginModal.classList.add('active'); });
-    closeModal.addEventListener('click', () => { loginModal.classList.remove('active'); loginForm.reset(); loginMessage.textContent=''; loginMessage.className='login-message'; });
-    loginForm.addEventListener('submit', e => {
-      e.preventDefault(); const u = loginForm.username.value, p = loginForm.password.value;
-      const valid = users.some(u0 => u0.username===u && u0.password===p);
-      if(valid) {
-        loginMessage.innerHTML = `<svg viewBox="0 0 24 24" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg><span>Welcome back!</span>`;
-        loginMessage.classList.add('success');
-        setTimeout(()=>window.location.href='notebook.html',1000);
-      } else {
-        loginMessage.innerHTML = `<svg viewBox="0 0 24 24" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Invalid credentials</span>`;
-        loginMessage.classList.add('error');
-      }
-    });
+    // Login logic
+    loginForm.onsubmit = e => { e.preventDefault(); const u = loginForm.username.value.trim(), p = loginForm.password.value; const valid = allUsers().some(x => x.username === u && x.password === p); if(valid) { loginMsg.textContent = 'Welcome back!'; loginMsg.classList.add('success'); setTimeout(() => window.location.href = 'notebook.html', 800); } else { loginMsg.textContent = 'Invalid credentials.'; } };
+
+    // Start button ripple and action
+    document.getElementById('startBtn').addEventListener('click', function(e) { e.preventDefault(); const r=document.createElement('span'); r.className='ripple'; this.appendChild(r); const d=Math.max(this.offsetWidth,this.offsetHeight); r.style.width=r.style.height=d+'px'; r.style.left=e.clientX-this.getBoundingClientRect().left-d/2+'px'; r.style.top=e.clientY-this.getBoundingClientRect().top-d/2+'px'; r.addEventListener('animationend',()=>r.remove()); setTimeout(()=>window.location.href='notebook.html',300); });
+
+    // Starfield backdrop
+    const canvas = document.getElementById('bgCanvas'), ctx = canvas.getContext('2d'); let w,h; function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; } window.addEventListener('resize', resize); resize(); const stars = Array.from({ length: 100 }, () => ({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1+0.3, d: Math.random()*100 })); let angle = 0; (function draw() { ctx.clearRect(0,0,w,h); angle += 0.002; stars.forEach(s => { const cx=w/2, cy=h/2; const rad=Math.hypot(s.x-cx, s.y-cy); const theta=Math.atan2(s.y-cy, s.x-cx)+angle; const x=cx+Math.cos(theta)*rad; const y=cy+Math.sin(theta)*rad; ctx.beginPath(); ctx.arc(x,y,s.r,0,2*Math.PI); ctx.fillStyle = `rgba(5,56,107,${0.1+0.1*Math.sin(angle+s.d)})`; ctx.fill(); }); requestAnimationFrame(draw); })();
   </script>
 </body>
 </html>
-<style>
-    header h1 {
-        font-size: 6rem;
-    }
-</style>
