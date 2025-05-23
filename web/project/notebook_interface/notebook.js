@@ -25,12 +25,23 @@ document.getElementById('save').addEventListener('click', () => {
     let saved = JSON.parse(localStorage.getItem("savedImages") || "[]");
     saved.push(imgSrc);
     localStorage.setItem("savedImages", JSON.stringify(saved));
-    console.log(saved);
+    // console.log(saved);
     // document.body.appendChild(saved);
     alert("Image saved in browser!");
 });
 
-
+window.addEventListener('DOMContentLoaded', () => {
+  const openImage = localStorage.getItem('openImage');
+  if (openImage) {
+    const img = new Image();
+    img.onload = function() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+    img.src = openImage;
+    localStorage.removeItem('openImage');
+  }
+});
 
 let lastX = 0;
 let lastY = 0;
