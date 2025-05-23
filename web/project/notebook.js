@@ -18,11 +18,19 @@ clearButton.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, ca
 
 // Save the canvas as an image
 document.getElementById('save').addEventListener('click', () => {
-    const link = document.createElement('a');
-    link.download = '/users/eleves-a/2024/raul-andrei.pop/Desktop/web/project/canvas-image.png'; // File path for the saved image
-    link.href = canvas.toDataURL(); // Convert canvas to a data URL
-    link.click(); // Trigger the download
+    const imgSrc = canvas.toDataURL('image/png');
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    
+    let saved = JSON.parse(localStorage.getItem("savedImages") || "[]");
+    saved.push(imgSrc);
+    localStorage.setItem("savedImages", JSON.stringify(saved));
+    console.log(saved);
+    // document.body.appendChild(saved);
+    alert("Image saved in browser!");
 });
+
+
 
 let lastX = 0;
 let lastY = 0;
@@ -33,7 +41,7 @@ canvas.addEventListener('mousedown', (e) => {
     lastY = e.offsetY;
 });
 
-
+// TODO: canvas does not draw points
 function draw(e) {
     if (!drawing) return;
     ctx.lineWidth = brushSize;
