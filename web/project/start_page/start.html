@@ -215,7 +215,7 @@
       if (valid) {
         loginMsg.textContent = 'Welcome back!';
         loginMsg.classList.add('success');
-        setTimeout(() => window.location.href = 'notebook.html', 800);
+        setTimeout(() => window.location.href = '../notebook_interface/notebook.html', 800);
       } else {
         loginMsg.textContent = 'Invalid credentials.';
       }
@@ -230,7 +230,7 @@
       r.style.left = e.clientX - this.getBoundingClientRect().left - d/2 + 'px';
       r.style.top = e.clientY - this.getBoundingClientRect().top - d/2 + 'px';
       r.addEventListener('animationend', () => r.remove());
-      setTimeout(() => window.location.href='notebook.html', 300);
+      setTimeout(() => window.location.href='../notebook_interface/notebook.html', 300);
     });
   </script>
 </body>
