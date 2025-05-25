@@ -198,7 +198,9 @@
       const u = signUpForm.username.value.trim(), p = signUpForm.password.value, c = signUpForm.confirmPassword.value;
       if (p !== c) {
         signUpMsg.textContent = 'Passwords do not match.';
-      } else {
+      } else if (allUsers().some(x => x.username === u) || signUpUsers.some(x => x.username === u)) {
+        signUpMsg.textContent = 'Username already exists.';
+      }else {
         signUpUsers.push({username: u, password: p});
         localStorage.setItem('signUpUsers', JSON.stringify(signUpUsers));
         signUpMsg.textContent = 'Account created!';
@@ -208,6 +210,7 @@
     };
 
     // Login logic
+    
     loginForm.onsubmit = e => {
       e.preventDefault();
       const u = loginForm.username.value.trim(), p = loginForm.password.value;
@@ -215,6 +218,7 @@
       if (valid) {
         loginMsg.textContent = 'Welcome back!';
         loginMsg.classList.add('success');
+        localStorage.setItem('currentUser', JSON.stringify({username: u, password: p}));
         setTimeout(() => window.location.href = '../notebook_interface/notebook.html', 800);
       } else {
         loginMsg.textContent = 'Invalid credentials.';

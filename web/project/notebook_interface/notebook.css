@@ -22,9 +22,21 @@ body {
     margin-right: 10px;
 }
 
+#canvas-container {
+    width: 90vw;
+    height: 80vh;
+    overflow: auto;
+    border: 2px solid #888;
+    background: #fff;
+    margin-top: 60px; /* to avoid toolbar overlap */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
 canvas {
-    /* make canvas bigger */
-    
     border: 1px solid #000;
     cursor: crosshair;
+    background: #fff;
+    display: block;
 }
