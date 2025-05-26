@@ -64,9 +64,8 @@ let lastY = 0;
 
 canvas.addEventListener('mousedown', (e) => {
     drawing = true;
-    lastX = e.offsetX;
-    lastY = e.offsetY;
-    // Draw a point if the user just clicks without moving
+    lastX = e.offsetX + container.scrollLeft;
+    lastY = e.offsetY + container.scrollTop;
     ctx.beginPath();
     ctx.arc(lastX, lastY, brushSize / 2, 0, 2 * Math.PI);
     ctx.fillStyle = brushColor;
@@ -81,11 +80,11 @@ canvas.addEventListener('mousemove', (e) => {
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.lineTo(e.offsetX + container.scrollLeft, e.offsetY + container.scrollTop);
     ctx.stroke();
 
-    lastX = e.offsetX;
-    lastY = e.offsetY;
+    lastX = e.offsetX + container.scrollLeft;
+    lastY = e.offsetY + container.scrollTop;
 });
 
 canvas.addEventListener('mouseup', () => {
