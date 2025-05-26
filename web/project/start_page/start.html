@@ -56,18 +56,18 @@
   </div>
 
   <script>
-    localStorage.clear(); // Clear localStorage for demo purposes
-    // Persistent user storage
-    const initialUsers = [{username:'Cezara',password:'cezara123'},{username:'Raul',password:'raul123'}];
-    let signUpUsers = JSON.parse(localStorage.getItem('signUpUsers')||'[]');
-    const allUsers = () => initialUsers.concat(signUpUsers);
+    // Persistent user storage (merge the shipped users + any new sign-ups)
+    const users = JSON.parse(localStorage.getItem('users'))
+                  || [{username:'Cezara',password:'cezara123'},{username:'Raul',password:'raul123'}];
+    // Save seed if first run
+    localStorage.setItem('users', JSON.stringify(users));
 
-    // Site name animation
-    document.addEventListener('DOMContentLoaded', () => {
-      // already animated via CSS keyframes
-    });
+    // Track current logged-in user
+    let currentUser = localStorage.getItem('currentUser') || null;
 
-    // Modal controls
+    function allUsers() { return users; }
+
+    // Modal controls & messaging
     const loginBtn = document.getElementById('loginBtn'),
           signUpBtn = document.getElementById('signUpBtn'),
           loginModal = document.getElementById('loginModal'),
@@ -90,11 +90,9 @@
       const u = signUpForm.username.value.trim(), p = signUpForm.password.value, c = signUpForm.confirmPassword.value;
       if (p !== c) {
         signUpMsg.textContent = 'Passwords do not match.';
-      } else if (allUsers().some(x => x.username === u) || signUpUsers.some(x => x.username === u)) {
-        signUpMsg.textContent = 'Username already exists.';
-      }else {
-        signUpUsers.push({username: u, password: p});
-        localStorage.setItem('signUpUsers', JSON.stringify(signUpUsers));
+      } else {
+        users.push({username: u, password: p});
+        localStorage.setItem('users', JSON.stringify(users));
         signUpMsg.textContent = 'Account created!';
         signUpMsg.classList.add('success');
         setTimeout(() => signUpModal.classList.remove('active'), 800);
@@ -108,6 +106,8 @@
       const u = loginForm.username.value.trim(), p = loginForm.password.value;
       const valid = allUsers().some(x => x.username === u && x.password === p);
       if (valid) {
+        currentUser = u;
+        localStorage.setItem('currentUser', currentUser);
         loginMsg.textContent = 'Welcome back!';
         loginMsg.classList.add('success');
         localStorage.setItem('currentUser', JSON.stringify(u));
