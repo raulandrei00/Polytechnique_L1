@@ -1,7 +1,11 @@
 "use strict";
 
+const GROW_MARGIN = 10; // px from bottom edge to trigger grow
+const GROW_AMOUNT = 500; // px to grow each time
+
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
+const container = document.getElementById('canvas-container');
 const colorPicker = document.getElementById('color');
 const sizeInput = document.getElementById('size');
 const clearButton = document.getElementById('clear');
@@ -80,18 +84,13 @@ function draw(e) {
     lastY = e.offsetY;
 }
 
-// Dynamic canvas resizing
-const GROW_MARGIN = 100; // px from edge to trigger grow
-const GROW_AMOUNT = 1000; // px to grow each time
-
-function growCanvasIfNeeded(e) {
-    const container = document.getElementById('canvas-container');
-    // Check scroll position
-    if (container.scrollLeft + container.clientWidth >= canvas.width - GROW_MARGIN) {
-        growCanvas(canvas.width + GROW_AMOUNT, canvas.height);
-    }
-    if (container.scrollTop + container.clientHeight >= canvas.height - GROW_MARGIN) {
+function growCanvasIfNeeded() {
+    // Only grow if user is near the bottom of the scrollable area
+    if (container.scrollTop + container.clientHeight >= container.scrollHeight - GROW_MARGIN) {
+        const oldHeight = canvas.height;
         growCanvas(canvas.width, canvas.height + GROW_AMOUNT);
+        // Scroll up by GROW_MARGIN to avoid continuous growth
+        container.scrollTop = container.scrollHeight - container.clientHeight - GROW_MARGIN - 10;
     }
 }
 
@@ -106,10 +105,13 @@ function growCanvas(newWidth, newHeight) {
     canvas.width = newWidth;
     canvas.height = newHeight;
     ctx.drawImage(temp, 0, 0);
+
+    // Also grow the container if needed (optional, usually not needed if container is fixed height)
+    // container.style.height = (parseInt(container.style.height || container.clientHeight) + GROW_AMOUNT) + "px";
 }
 
 // Attach scroll event
-document.getElementById('canvas-container').addEventListener('scroll', growCanvasIfNeeded);
+container.addEventListener('scroll', growCanvasIfNeeded);
 
 document.getElementById('userCircle').onclick = function() {
   window.location.href = '../dashboard/dashboard.html';
@@ -141,8 +143,6 @@ document.getElementById("userCircle").onmouseover = function() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    // ...existing code...
-
     // Set userCircle content
     const user = localStorage.getItem('currentUser') || '';
     const userCircle = document.getElementById('userCircle');
@@ -150,5 +150,4 @@ window.addEventListener('DOMContentLoaded', () => {
         userCircle.textContent = user ? user.charAt(1).toUpperCase() : '?';
     }
 
-    // ...rest of your code...
 });
