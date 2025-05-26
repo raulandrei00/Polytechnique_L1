@@ -134,7 +134,11 @@
     <div class="site-name">Starry Sketch</div>
     <h1 class="title">Sketch &amp; draw<br>digitally.</h1>
     <p class="subtitle">Sketch, write, paint &amp; draw easily with our fine-tuned tools!</p>
-    <button id="startBtn" class="btn-center">Begin sketching</button>
+    
+    <div style="display: flex; gap: 10px;">
+      <button id="startBtn" class="btn-center">Begin sketching</button>
+      <button id="dashBtn" class="btn-center">Your Dashboard</button>
+    </div>
   </div>
 
   <!-- Sign Up Modal -->
@@ -165,6 +169,7 @@
   </div>
 
   <script>
+    localStorage.clear(); // Clear localStorage for demo purposes
     // Persistent user storage
     const initialUsers = [{username:'Cezara',password:'cezara123'},{username:'Raul',password:'raul123'}];
     let signUpUsers = JSON.parse(localStorage.getItem('signUpUsers')||'[]');
@@ -218,7 +223,7 @@
       if (valid) {
         loginMsg.textContent = 'Welcome back!';
         loginMsg.classList.add('success');
-        localStorage.setItem('currentUser', JSON.stringify({username: u, password: p}));
+        localStorage.setItem('currentUser', JSON.stringify(u));
         setTimeout(() => window.location.href = '../notebook_interface/notebook.html', 800);
       } else {
         loginMsg.textContent = 'Invalid credentials.';
@@ -235,6 +240,18 @@
       r.style.top = e.clientY - this.getBoundingClientRect().top - d/2 + 'px';
       r.addEventListener('animationend', () => r.remove());
       setTimeout(() => window.location.href='../notebook_interface/notebook.html', 300);
+    });
+
+    // Dashboard button ripple and action
+    document.getElementById('dashBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const r = document.createElement('span'); r.className='ripple'; this.appendChild(r);
+      const d = Math.max(this.offsetWidth, this.offsetHeight);
+      r.style.width = r.style.height = d + 'px';
+      r.style.left = e.clientX - this.getBoundingClientRect().left - d/2 + 'px';
+      r.style.top = e.clientY - this.getBoundingClientRect().top - d/2 + 'px';
+      r.addEventListener('animationend', () => r.remove());
+      setTimeout(() => window.location.href='../dashboard/dashboard.html', 300);
     });
   </script>
 </body>
