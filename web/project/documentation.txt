@@ -1,0 +1,18 @@
+Overview of the webpage
+    canvas application that allows users to sketch [, ...] using their cursor
+
+functionalities
+    canvas tools: ...
+    
+    save option: the user can save their current work by clicking the save button
+    the image is converted to a JSON file and stored in an array that is later accessed by the dashboard
+    
+    dashboard: the user can browse through their saved work and reopen any piece they want to continue editing
+    when the user clicks on a certain canvas, a new notebook.html instance is opened
+
+    sign in and log in: the infrastructure allows creation and use of several 
+    accounts each keeping their particular settings and work
+    this works by storing each username and password in the local memory as well 
+    as the current logged in user. This way, when the user attempts to save their work, 
+    it is saved directly in a JavaScript array specific to them (their username and password)
+    the dashboard similarly shows canvases from their specific array. 

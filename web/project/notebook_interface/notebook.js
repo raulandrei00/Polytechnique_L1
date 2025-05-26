@@ -17,9 +17,15 @@ canvas.addEventListener('mousemove', draw);
 colorPicker.addEventListener('input', (e) => brushColor = e.target.value);
 sizeInput.addEventListener('input', (e) => brushSize = e.target.value);
 clearButton.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
-userKey = `savedImages_${localStorage.getItem('currentUser')}`;
+let userKey = null;
 // Save the canvas as an image
 document.getElementById('save').addEventListener('click', () => {
+    if (!localStorage.getItem('currentUser')) {
+      alert("No user is currently logged in. Please log in first.");
+      return;
+    }
+    else userKey = `savedImages_${localStorage.getItem('currentUser')}`;
+    // console.log("Saving canvas to localStorage with key:", userKey);
     const imgSrc = canvas.toDataURL('image/png');
     const canvasData = {
         img: imgSrc,
@@ -105,4 +111,44 @@ function growCanvas(newWidth, newHeight) {
 // Attach scroll event
 document.getElementById('canvas-container').addEventListener('scroll', growCanvasIfNeeded);
 
+document.getElementById('userCircle').onclick = function() {
+  window.location.href = '../dashboard/dashboard.html';
+};
 
+document.getElementById("userCircle").onmouseover = function() {
+  const tooltip = document.createElement('div');
+  tooltip.textContent = "click to go to dashboard";
+  tooltip.style.position = 'absolute';
+  tooltip.style.background = '#333';
+  tooltip.style.color = '#fff';
+  tooltip.style.padding = '4px 8px';
+  tooltip.style.borderRadius = '4px';
+  tooltip.style.fontSize = '12px';
+  tooltip.style.pointerEvents = 'none';
+  tooltip.style.zIndex = 1000;
+
+  document.body.appendChild(tooltip);
+
+  const userCircle = document.getElementById("userCircle");
+  const rect = userCircle.getBoundingClientRect();
+  tooltip.style.left = (rect.left + window.scrollX + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
+  tooltip.style.top = (rect.top + window.scrollY + 30) + 'px';
+
+  userCircle.onmouseleave = function() {
+    if (tooltip.parentNode) tooltip.parentNode.removeChild(tooltip);
+    userCircle.onmouseleave = null;
+  };
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    // ...existing code...
+
+    // Set userCircle content
+    const user = localStorage.getItem('currentUser') || '';
+    const userCircle = document.getElementById('userCircle');
+    if (userCircle) {
+        userCircle.textContent = user ? user.charAt(1).toUpperCase() : '?';
+    }
+
+    // ...rest of your code...
+});
