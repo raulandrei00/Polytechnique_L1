@@ -16,7 +16,7 @@ let brushSize = sizeInput.value;
 
 // canvas.addEventListener('mousedown', () => drawing = true);
 canvas.addEventListener('mouseup', () => drawing = false);
-canvas.addEventListener('mousemove', draw);
+// canvas.addEventListener('mousemove', draw);
 
 colorPicker.addEventListener('input', (e) => brushColor = e.target.value);
 sizeInput.addEventListener('input', (e) => brushSize = e.target.value);
@@ -66,14 +66,18 @@ canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     lastX = e.offsetX;
     lastY = e.offsetY;
+    // Draw a point if the user just clicks without moving
+    ctx.beginPath();
+    ctx.arc(lastX, lastY, brushSize / 2, 0, 2 * Math.PI);
+    ctx.fillStyle = brushColor;
+    ctx.fill();
 });
 
-// TODO: canvas does not draw points
-function draw(e) {
+canvas.addEventListener('mousemove', (e) => {
     if (!drawing) return;
+    ctx.strokeStyle = brushColor;
     ctx.lineWidth = brushSize;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = brushColor;
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
@@ -82,7 +86,15 @@ function draw(e) {
 
     lastX = e.offsetX;
     lastY = e.offsetY;
-}
+});
+
+canvas.addEventListener('mouseup', () => {
+    drawing = false;
+});
+
+canvas.addEventListener('mouseleave', () => {
+    drawing = false;
+});
 
 function growCanvasIfNeeded() {
     // Only grow if user is near the bottom of the scrollable area
