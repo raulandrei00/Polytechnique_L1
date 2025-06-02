@@ -1,0 +1,68 @@
+body {
+    margin-left:1em;
+  }
+  [class~=Coordinates],
+  [class~=input-data] {
+    display:none;
+  }
+  body {
+    margin-bottom:0;
+  }
+  body {
+    margin-right:0;
+  }
+  body {
+    margin-top:0;
+  }
+  canvas {
+    margin-left:2em;
+  }
+  canvas {
+    margin-top:2em;
+  }
+  canvas {
+    margin-bottom:2em;
+  }
+  canvas {
+    margin-right:2em;
+  }
+  canvas {
+    border-left-width:.125pc;
+  }
+  canvas {
+    border-bottom-width:.125pc;
+  }
+  canvas {
+    border-right-width:.125pc;
+  }
+  canvas {
+    border-top-width:.125pc;
+  }
+  canvas {
+    border-left-style:solid;
+  }
+  canvas {
+    border-bottom-style:solid;
+  }
+  canvas {
+    border-right-style:solid;
+  }
+  canvas {
+    border-top-style:solid;
+  }
+  canvas {
+    border-left-color:black;
+  }
+  canvas {
+    border-bottom-color:black;
+  }
+  canvas {
+    border-right-color:black;
+  }
+  canvas {
+    border-top-color:black;
+  }
+  canvas {
+    border-image:none;
+  }
+  

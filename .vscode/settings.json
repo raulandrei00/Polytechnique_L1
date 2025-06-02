@@ -2,5 +2,6 @@
     "files.associations": {
         "array": "cpp",
         "string_view": "cpp"
-    }
+    },
+    "r.lsp.promptToInstall": false
 }
