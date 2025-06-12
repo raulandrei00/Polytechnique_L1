@@ -1,89 +1,167 @@
-import random 
-import typing 
+import random
+from typing import Callable, Iterable, Iterator
 
-def generate_walks (n):
-    if (n == 0): yield []
-    else:
-        pref = generate_walks(n-1)
-        
-        for crt in pref:
-            yield crt + [-1]
-            yield crt + [1]
-
-for w in generate_walks(5):
-    if sum(w) == 3:
-        print(w)
-
-def generate_meanders(n,k):
-    if (n == 0 and k == 0):
-        yield []
-    if (n == 0 or k < 0 or abs(k) > n): return
-    
-    up = generate_meanders(n-1,k+1)
-    down = generate_meanders(n-1,k-1)
-
-    for crt in up:
-        yield crt + [-1]
-    for crt in down:
-        yield crt + [1]
-
-
-for m in generate_meanders(5,3):
-    print(m)
-
-cache_mem = {}
-def count_meanders(n,k):
-    if (n == 0 and k == 0): return 1
-    if (n == 0 or k < 0 or abs(k) > n): return 0
-    
-    if (n,k) in cache_mem: return cache_mem[(n,k)]
-    cache_mem[(n,k)] = count_meanders(n-1,k+1) + count_meanders(n-1,k-1)
-
-    return count_meanders(n-1,k+1) + count_meanders(n-1,k-1)
-
-print(count_meanders(10,2))
-
-
-class RandMeanderGen:
-    def __init__(self, maxn):
-        '''Initialize a random generator of meanders of length n <= maxn.'''
-        self.maxn = maxn
-        pass
-
-    def random_meander(self, n, k):
-        '''Assuming 0 <= n <= self.maxn, returns a uniformly random meander of length n with final height k.
-        If there is no such meander, returns None.'''
-        pass
-
-def heappush (heap : list[tuple[str , int]], a : str , w : int):
-    heap.append((a , w))
-    crt_pos = len(heap) - 1
-    while (crt_pos > 0):
-        parent_pos = (crt_pos - 1) // 2
-        if heap[parent_pos][1] <= w: break
-        heap[crt_pos] , heap[parent_pos] = heap[parent_pos] , heap[crt_pos]
-        crt_pos = parent_pos
-
-def heappop (heap : list[tuple[str , int]]) -> tuple[str , int]:
-    if len(heap) == 0: raise Exception('IndexError')
-    ret = heap[0]
-    last_ind = len(heap) - 1
-    heap[0] = heap[last_ind]
-    heap.pop()
-    crt_pos = 0
-    while (crt_pos < len(heap)):
-        left_child = 2 * crt_pos + 1
-        right_child = 2 * crt_pos + 2
-        if left_child >= len(heap): break
-        elif right_child >= len(heap):
-            if heap[crt_pos][1] > heap[left_child][1]:
-                heap[crt_pos], heap[left_child] = heap[left_child], heap[crt_pos]
-            break
-        elif heap[crt_pos][1] <= heap[left_child][1] and heap[crt_pos][1] <= heap[right_child][1]:
-            break
-        elif heap[left_child][1] < heap[right_child][1]:
-            heap[crt_pos], heap[left_child] = heap[left_child], heap[crt_pos]
-            crt_pos = left_child
+# Q1
+def throw(n: int, p: int, g: int, ts: list[int]) -> list[list[int]]:
+    bins = [[0 for _ in range(2)] for __ in range(n)]
+    for i , b in enumerate(ts):
+        if (i < p):
+            bins[b][0] += 1
         else:
-            heap[crt_pos], heap[right_child] = heap[right_child], heap[crt_pos]
-            crt_pos = right_child
+            bins[b][1] += 1
+    return bins
+
+#----------------------------------------------------------------------
+
+# Q2
+A = []
+def countA(n: int, p: int) -> int:
+    global A
+    A = [[0 for _ in range(p+1)] for __ in range(n+1)]
+    
+    A[0][0] = 1;
+    
+    for i in range(1 , n+1):
+        for j in range (0 , p+1):
+            for b in range(0 , j+1):
+                A[i][j] += A[i-1][j-b]
+          #  print(i , j , A[i][j])
+        
+    
+    return A[n][p]
+
+#----------------------------------------------------------------------
+
+def dist(sample_fn: Callable[[int,int],list[int]], n: int, p: int, samples: int = 10000) -> list[tuple[list[int], float]]:
+    counts : dict[Iterable[int], float] = dict()
+    for _ in range(samples):
+        u = sample_fn(n,p)
+        counts[tuple(u)] = counts.get(tuple(u), 0) + 1
+    return [(list(u), v / samples) for (u,v) in counts.items()]
+
+# Q3
+def sample_naive(n: int, p: int) -> list[int]:
+    bins = [0 for _ in range(n)]
+    for _ in range(p):
+        b = random.randrange(0, n)
+        bins[b] += 1
+    return bins
+
+# Q4
+def sample_best_of_k(n: int, p: int, k: int) -> list[int]:
+    bins = [0 for _ in range(n)]
+    for _ in range(p):
+        selector = [i for i in range(n)]
+        random.shuffle(selector)
+        minn = (p+1 , 0)
+        for i , b in enumerate(selector):
+            if i == k: break
+            if bins[b] < minn[0]: minn = (bins[b] , b)
+        bins[minn[1]] += 1
+    
+    return bins
+
+# Q5
+def sample_uniform(n: int, p: int) -> list[int]:
+    countA(n, p)
+    # assigning bins from right to left
+    bins = [0 for i in range(n)]
+    balls_left = p
+    for i in range(n-1 , -1 , -1):
+        b = random.choices(range(balls_left+1) , A[i][balls_left::-1])
+        
+        balls_left -= b[0]
+        bins[i] = b[0]
+        
+    return bins
+
+#----------------------------------------------------------------------
+
+class Bin:
+    def __init__(self, label: str) -> None:
+        self.label = label
+
+class Move:
+    def __init__(self, label: str, incoming: list[Bin], outgoing: list[Bin]) -> None:
+        self.label = label
+        self.incoming = incoming
+        self.outgoing = outgoing
+
+(A, B, C, D, E, F)    = (Bin('A'), Bin('B'), Bin('C'), Bin('D'), Bin('E'), Bin('F'))
+(g, h, i, j, k, l, m) = (Move('g', [A], [B]), Move('h', [B], [C,E]), Move('i', [B], [C]),
+                         Move('j', [C], [D]), Move('k', [D,E], [F]), Move('l', [E], [A,F]),
+                         Move('m', [C], []))
+
+init = {'A':1,'B':0,'C':0,'D':0,'E':0,'F':0}
+goal = {'A':0,'B':0,'C':0,'D':0,'E':0,'F':1}
+
+# Q6
+
+
+
+
+def winning(bins: list[Bin], moves: list[Move], state: dict[str, int], goal: dict[str, int], timeout: int) -> Iterator[list[str]]:
+    # iterate through possible moves and yield it and generator
+    # of (bin , move, modified_state, goal, timeout-1)
+    
+    current_state = state.copy()
+    
+        
+    # !! base case
+    if (current_state == goal): 
+        yield []
+        
+    elif (timeout == 0): return
+    
+    for node in moves:
+        
+        # check
+        if not all(current_state[frm.label] > 0 for frm in node.incoming): continue
+    
+        for frm in node.incoming:
+            current_state[frm.label] -= 1
+            
+        for to in node.outgoing:
+            current_state[to.label] += 1
+            
+        for cont in winning(bins , moves , current_state , goal , timeout-1):
+            yield [node.label] + cont
+        # revert state
+        for frm in node.incoming:
+            current_state[frm.label] += 1
+            
+        for to in node.outgoing:
+            current_state[to.label] -= 1
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
