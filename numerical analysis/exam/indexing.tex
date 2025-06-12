@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, geometry, graphicx, enumitem}
+\usepackage{multicol}
+\geometry{margin=0.75in}
+
+\title{Numerical Methods Cheat Sheet}
+\author{Compiled with \LaTeX}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Root Finding Methods}
+\begin{itemize}
+  \item \textbf{Bisection Method:} Error bound after $n$ steps:
+  \[ |x_n - x^*| \leq \frac{b - a}{2^n} \]
+  \item \textbf{Newton's Method:} 
+  \[ x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \]
+  Requires $f'(x)$ and has quadratic convergence.
+  \item \textbf{Secant Method:} Approximates $f'(x)$:
+  \[ x_{n+1} = x_n - f(x_n) \cdot \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})} \]
+\end{itemize}
+
+\section*{Polynomial Interpolation}
+\begin{itemize}
+  \item \textbf{Lagrange Interpolation:}
+  \[ P(x) = \sum_{j=0}^{n} f(x_j) \ell_j(x), \quad \ell_j(x) = \prod_{i \ne j} \frac{x - x_i}{x_j - x_i} \]
+  \item \textbf{Error:}
+  \[ f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i=0}^{n}(x - x_i) \]
+\end{itemize}
+
+\section*{Least Squares Approximation}
+\begin{itemize}
+  \item Model: $A\beta = y$, where $A$ contains basis functions.
+  \item Solve using Normal Equations:
+  \[ A^T A \beta = A^T y \]
+\end{itemize}
+
+\section*{Numerical Integration}
+\begin{itemize}
+  \item \textbf{Trapezoid Rule:}
+  \[ \int_a^b f(x) dx \approx \frac{h}{2} \left[f(a) + 2 \sum_{i=1}^{n-1} f(x_i) + f(b)\right] \]
+  \item \textbf{Simpson's Rule:}
+  \[ \int_a^b f(x) dx \approx \frac{h}{3} \left[f(a) + 4 \sum f(x_{\text{odd}}) + 2 \sum f(x_{\text{even}}) + f(b)\right] \]
+  \item \textbf{Error (Trapezoid):}
+  \[ E_T = -\frac{(b-a)^3}{12n^2} f''(\xi) \]
+\end{itemize}
+
+\section*{Essential Python Functions}
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=*]
+  \item \texttt{numpy:}
+  \begin{itemize}
+    \item \texttt{np.linspace, np.polyfit, np.polyval}
+    \item \texttt{np.linalg.solve}
+  \end{itemize}
+  \item \texttt{matplotlib.pyplot:}
+  \begin{itemize}
+    \item \texttt{plt.plot, plt.scatter, plt.grid, plt.legend}
+  \end{itemize}
+  \item \texttt{scipy:}
+  \begin{itemize}
+    \item \texttt{optimize.newton, integrate.quad}
+  \end{itemize}
+\end{itemize}
+\end{multicols}
+
+\section*{Notebook Index}
+\begin{itemize}
+  \item \textbf{Root Finding:} \texttt{1-RootFinding-Corr.ipynb}
+  \begin{itemize}
+    \item \texttt{newton} (cell 29, 40), \texttt{bisection} (cell 23), \texttt{secant} (cell 26)
+  \end{itemize}
+  \item \textbf{Polynomial Approximation:} \texttt{2-PolynomialApproximation-Corr.ipynb}
+  \begin{itemize}
+    \item \texttt{interpolation} (cell 2, 16), \texttt{lagrange} (cell 16), \texttt{least squares} (cell 39, 40)
+  \end{itemize}
+  \item \textbf{Numerical Integration:} \texttt{3-NumericalIntegration-Corr.ipynb}
+  \begin{itemize}
+    \item \texttt{composite trapezoid} (cell 15), \texttt{simpson} (cell 25)
+  \end{itemize}
+\end{itemize}
+
+\end{document}
