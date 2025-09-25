@@ -1,6 +1,7 @@
 <?php
 // Save canvas image to server
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['image'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['image'])) 
+{
     $data = $_POST['image'];
 
     $data = str_replace('data:image/png;base64,', '', $data);
